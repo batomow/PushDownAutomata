@@ -1,7 +1,8 @@
 extends "res://addons/PushDownAutomata/PDA.gd"
 
 export (NodePath) var entity_path
-export (Array, NodePath) var _dependencies = []
+export (Array, NodePath) var _global_dependencies = []
+export (Array, String) var _relative_dependencies = []
 export (Array, Script) var _states = []
 export (String) var _entry_state_name = "Idle"
 export (int, 0, 10) var state_buffer = 10
@@ -13,6 +14,7 @@ var past_stack = []
 var current_state = null
 
 func _ready():
+	var dependencies = _global_dependencies + _relative_dependencies
 	for script in _states: 
 		var state = script.new()
 		var state_name = get_name_from_path(script.get_path(), PASCAL_CASE)
@@ -20,17 +22,14 @@ func _ready():
 		state.name = state_name
 		states[state.name] = state
 
-	for path in _dependencies: 
-		var dep = get_node(path)
+	for _dep in dependencies: 
+		var dep = get_node(_dep) if _dep in _global_dependencies else entity.get_node(_dep)
 		if dep is AnimationPlayer: 
 			dep.connect("animation_finished", self, "_on_animation_finished")
-		var dep_name = get_name_from_path(path, SNAKE_CASE)
-		if dep: 
-			for state in states.values(): 
-				if dep_name in state: 
-					state[dep_name] = dep
-		else: 
-			printerr("couldn't find dependency: ", dep)
+		var dep_name = get_name_from_path(_dep, SNAKE_CASE) if _dep in _global_dependencies else snake_case(_dep)
+		for state in states.values(): 
+			if dep_name in state: 
+				state[dep_name] = dep
 
 	push_state(_entry_state_name)
 
@@ -72,3 +71,4 @@ func print_buffer():
 	for state in past_stack:
 		names.push_back(state.name)
 	print("<- ", current_state.name, " : ",  names)
+
