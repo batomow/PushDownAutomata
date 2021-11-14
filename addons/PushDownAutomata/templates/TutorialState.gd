@@ -11,15 +11,19 @@ func _enter()%VOID_RETURN%:
 %TS%pass
 
 #Runs in the _input(event) Node function
-func _handle_input(event)%VOID_RETURN%:
+func _handle_input(_event)%VOID_RETURN%:
+%TS%pass
+
+#Runs in the _gui_input(event), only runs if entity is of type Control. 
+func _handle_gui_input(_event)%VOID_RETURN%:
 %TS%pass
 
 #Runs in the _unhandled_input(event) Node function
-func _handle_unhandled_input(event)%VOID_RETURN%:
+func _handle_unhandled_input(_event)%VOID_RETURN%:
 %TS%pass
 
 #called when the dependency of type AnimationPlayer finished playing an animations, only if there is one. 
-func _handle_animation_finished(anim_name%STRING_TYPE%)%VOID_RETURN%:
+func _handle_animation_finished(_anim_name%STRING_TYPE%)%VOID_RETURN%:
 #%TS%if anim_name == "some_anim":
 #%TS%%TS%push_state("NewState")
 %TS%pass

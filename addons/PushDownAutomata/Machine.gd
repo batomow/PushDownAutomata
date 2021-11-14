@@ -19,6 +19,8 @@ func _ready():
 		var state = script.new()
 		var state_name = get_name_from_path(script.get_path(), PASCAL_CASE)
 		state._setup(self, entity)
+		if entity is Control: 
+			entity.connect("gui_input", self, "_gui_input")
 		state.name = state_name
 		states[state.name] = state
 
@@ -35,6 +37,9 @@ func _ready():
 
 func _input(event):
 	current_state._handle_input(event)
+
+func _gui_input(event): 
+	current_state._handle_gui_input(event)
 
 func _unhandled_input(event):
 	current_state._handle_unhandled_input(event)
