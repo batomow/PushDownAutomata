@@ -14,6 +14,10 @@ func _enter()%VOID_RETURN%:
 func _handle_input(event)%VOID_RETURN%:
 %TS%pass
 
+#Runs in the _unhandled_input(event) Node function
+func _handle_unhandled_input(event)%VOID_RETURN%:
+%TS%pass
+
 #called when the dependency of type AnimationPlayer finished playing an animations, only if there is one. 
 func _handle_animation_finished(anim_name%STRING_TYPE%)%VOID_RETURN%:
 #%TS%if anim_name == "some_anim":

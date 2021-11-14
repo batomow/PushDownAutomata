@@ -36,6 +36,9 @@ func _ready():
 func _input(event):
 	current_state._handle_input(event)
 
+func _unhandled_input(event):
+	current_state._handle_unhandled_input(event)
+
 func _on_animation_finished(anim_name): 
 	current_state._handle_animation_finished(anim_name)
 

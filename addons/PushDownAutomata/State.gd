@@ -16,6 +16,12 @@ func _enter():
 func _handle_input(_event):
 	pass
 
+func _handle_unhandled_input(_event): 
+	pass
+
+func _handle_gui_input(_event): 
+	pass
+
 func _handle_animation_finished(_anim_name): 
 	pass
 
